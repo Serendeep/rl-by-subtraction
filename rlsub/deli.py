@@ -60,10 +60,6 @@ ACCEPT_SHARPNESS = 2.10
 Order = tuple[int, ...]
 
 
-def item(token: int) -> Item:
-    return MENU[token]
-
-
 def price(order: Order) -> float:
     return sum(MENU[t].price for t in order)
 
@@ -98,10 +94,6 @@ def accept_probability(order: Order) -> float:
     """Ground truth RLCD calibrates against."""
     logit = ACCEPT_SHARPNESS * (true_satisfaction(order) - ACCEPT_MIDPOINT)
     return float(1.0 / (1.0 + np.exp(-logit)))
-
-
-def sample_acceptance(order: Order, rng: np.random.Generator) -> int:
-    return int(rng.random() < accept_probability(order))
 
 
 # --- RLVR ------------------------------------------------------------------

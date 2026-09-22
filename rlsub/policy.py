@@ -84,9 +84,6 @@ class Policy:
     def updated(self, gradient: np.ndarray, learning_rate: float) -> "Policy":
         return replace(self, logits=self.logits + learning_rate * gradient)
 
-    def entropy(self) -> float:
-        logp = self.log_probs()
-        return float(-(np.exp(logp) * logp).sum(axis=-1).mean())
 
 
 def sft_prior() -> np.ndarray:

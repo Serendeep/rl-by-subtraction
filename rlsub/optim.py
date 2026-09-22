@@ -75,30 +75,46 @@ def grpo_step(
     clip_low: float = DEFAULT_CLIP,
     clip_high: float | None = None,
     divide_by_std: bool = True,
+    inner_epochs: int = 4,
 ) -> Policy:
-    """One GRPO update over G orders. The ratio is 1 on the first inner epoch, so
-    clipping never activates. The code computes it anyway to keep the term visible."""
+    """GRPO over one group of G orders, reusing the rollout for `inner_epochs` updates.
+
+    Reusing the rollout is what makes the ratio diverge from 1 and gives clipping
+    and the KL term something to do. At a single epoch both are inert, which is
+    worth knowing before trusting any implementation that hardcodes the ratio.
+    """
     advantages = group_advantages(rewards, divide_by_std=divide_by_std)
     if not advantages.any():
         return policy
 
-    gradient = np.zeros_like(policy.logits)
-    for order, advantage in zip(orders, advantages):
-        log_prob = policy.log_prob(order)
-        ratio = 1.0  # single inner epoch
-        surrogate = clipped_surrogate(
-            np.array([ratio]), np.array([advantage]), clip_low, clip_high
-        )[0]
-        score = policy.grad_log_prob(order)
+    behaviour = [policy.log_prob(order) for order in orders]
+    reference_log_probs = [reference.log_prob(order) for order in orders]
+    high = clip_low if clip_high is None else clip_high
 
-        # In the loss, not the reward. That keeps the advantage a pure function
-        # of the group's rewards, and is the structural difference from PPO-RLHF.
-        kl_penalty = k3_kl(
-            np.array([log_prob]), np.array([reference.log_prob(order)])
-        )[0]
-        gradient += (surrogate - kl_coefficient * kl_penalty) * score
+    for _ in range(inner_epochs):
+        gradient = np.zeros_like(policy.logits)
+        for order, advantage, old_log_prob, ref_log_prob in zip(
+            orders, advantages, behaviour, reference_log_probs
+        ):
+            log_prob = policy.log_prob(order)
+            ratio = float(np.exp(np.clip(log_prob - old_log_prob, -60, 60)))
 
-    return policy.updated(gradient / len(orders), learning_rate)
+            # d/dtheta min(rA, clip(r)A) is A*r*grad_log_prob on the unclipped
+            # branch and exactly zero on the clipped one, since clip() has no
+            # theta dependence there.
+            clipped = float(np.clip(ratio, 1 - clip_low, 1 + high))
+            coefficient = ratio * advantage if ratio * advantage <= clipped * advantage else 0.0
+
+            # grad of -beta * k3 is beta * (pi_ref/pi_theta - 1) * grad_log_prob,
+            # which is DeepSeekMath's published gradient coefficient.
+            u = float(np.exp(np.clip(ref_log_prob - log_prob, -60, 60)))
+            coefficient += kl_coefficient * (u - 1.0)
+
+            gradient += coefficient * policy.grad_log_prob(order)
+
+        policy = policy.updated(gradient / len(orders), learning_rate)
+
+    return policy
 
 
 def critic_step(

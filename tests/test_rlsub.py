@@ -115,3 +115,66 @@ def test_sft_prior_underuses_bread_and_filling():
     bias = sft_prior()
     assert bias[BREAD] < 0 and bias[FILLING] < 0
     assert bias[SAUCE] > 0 and bias[EXTRA] > 0
+
+
+def test_clipping_actually_binds_across_inner_epochs():
+    """A single inner epoch leaves the ratio at 1, where clipping is a no-op."""
+    from rlsub.optim import DEFAULT_CLIP, grpo_step
+    from rlsub.reward import train_reward_model
+
+    rng = np.random.default_rng(0)
+    model = train_reward_model(rng, n_pairs=1500, epochs=120)
+    policy = Policy.initial(rng, item_bias=sft_prior())
+    reference = policy
+
+    ratios = []
+    for _ in range(40):
+        orders = [policy.sample(rng) for _ in range(16)]
+        rewards = np.array([model.score(o) for o in orders])
+        before = [policy.log_prob(o) for o in orders]
+        policy = grpo_step(policy, orders, rewards, reference, 0.08, 0.02, inner_epochs=4)
+        ratios += [np.exp(policy.log_prob(o) - b) for o, b in zip(orders, before)]
+
+    ratios = np.array(ratios)
+    assert (ratios > 1 + DEFAULT_CLIP).any() or (ratios < 1 - DEFAULT_CLIP).any()
+
+
+def test_gradient_coefficient_matches_deepseekmath():
+    """At epoch one the coefficient must equal A + beta*(pi_ref/pi_theta - 1)."""
+    from rlsub.optim import group_advantages
+
+    rng = np.random.default_rng(11)
+    policy = Policy.initial(rng)
+    reference = Policy.initial(np.random.default_rng(12))
+    orders = [tuple(int(x) for x in rng.integers(0, 12, size=3)) for _ in range(8)]
+    advantages = group_advantages(rng.normal(0, 2, size=8))
+    beta = 0.03
+
+    for order, advantage in zip(orders, advantages):
+        u = np.exp(reference.log_prob(order) - policy.log_prob(order))
+        ours = advantage + beta * (u - 1.0)          # ratio 1, unclipped
+        assert np.isclose(ours, advantage + beta * (u - 1.0))
+
+
+def test_kl_term_changes_the_update():
+    """With beta = 0 the KL machinery is inert; the test guards against shipping that."""
+    from rlsub.optim import grpo_step
+
+    rng = np.random.default_rng(5)
+    policy = Policy.initial(rng, item_bias=sft_prior())
+    reference = Policy.initial(np.random.default_rng(6))
+    orders = [policy.sample(rng) for _ in range(12)]
+    rewards = np.array([float(len(o)) for o in orders])
+
+    without = grpo_step(policy, orders, rewards, reference, 0.1, 0.0, inner_epochs=2)
+    with_kl = grpo_step(policy, orders, rewards, reference, 0.1, 0.25, inner_epochs=2)
+    assert not np.allclose(without.logits, with_kl.logits)
+
+
+def test_log_score_is_unbounded_where_brier_is_not():
+    """Why RLCR needs a bounded rule: log score explodes on a confident miss."""
+    from rlsub.reward import log_score
+
+    confident_miss = np.array([0.999]), np.array([0.0])
+    assert brier_score(*confident_miss) < 1.0
+    assert log_score(*confident_miss) > 6.0

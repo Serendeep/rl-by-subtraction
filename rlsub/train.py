@@ -10,14 +10,8 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from .deli import Order, accept_probability, true_satisfaction, verifies
-from .optim import (
-    ValueBaseline,
-    critic_step,
-    grpo_step,
-    group_advantages,
-    is_degenerate_group,
-)
+from .deli import Order, accept_probability, describe, true_satisfaction, verifies
+from .optim import grpo_step, is_degenerate_group
 from .policy import Policy, sft_prior
 from .reward import (
     DecisionHead,
@@ -165,33 +159,6 @@ def _random_order(rng: np.random.Generator) -> Order:
     return tuple(int(t) for t in rng.integers(0, VOCAB_SIZE, size=length))
 
 
-def compare_baselines(
-    rng: np.random.Generator,
-    reward_model: RewardModel,
-    steps: int = 300,
-    learning_rate: float = 0.18,
-) -> dict[str, list[float]]:
-    """Group mean vs learned critic, estimating the same expected reward."""
-    policy = Policy.initial(rng)
-    baseline = ValueBaseline()
-    group_trace: list[float] = []
-    critic_trace: list[float] = []
-    truth_trace: list[float] = []
-
-    for _ in range(steps):
-        orders = [policy.sample(rng) for _ in range(GROUP_SIZE)]
-        rewards = np.array([reward_model.score(o) for o in orders])
-        group_trace.append(float(rewards.mean()))
-        critic_trace.append(baseline.predict())
-
-        wide = [policy.sample(rng) for _ in range(512)]
-        truth_trace.append(float(np.mean([reward_model.score(o) for o in wide])))
-
-        policy, baseline = critic_step(policy, orders, rewards, baseline, learning_rate)
-
-    return {"group_mean": group_trace, "critic": critic_trace, "expected": truth_trace}
-
-
 def main() -> None:
     rng = np.random.default_rng(0)
     reward_model = train_reward_model(rng)
@@ -214,6 +181,11 @@ def main() -> None:
     rlcd = run_rlcd(rng)
     print("\nRLCD: a typed, calibrated decision")
     print(f"  Brier {rlcd.brier:.4f}   ECE {rlcd.ece:.4f}")
+
+    sample = _random_order(rng)
+    print(f"\nExample order: {describe(sample)}")
+    print(f"  verifies={verifies(sample)}  true satisfaction={true_satisfaction(sample):+.2f}"
+          f"  P(accept)={accept_probability(sample):.2f}")
 
 
 if __name__ == "__main__":

@@ -80,7 +80,7 @@ def zero_advantage(rng: np.random.Generator) -> None:
     ax.set_xlabel("Training step")
     ax.set_ylabel("Fraction")
     ax.set_ylim(0, 1)
-    ax.set_title("A binary verifier teaches nothing until the policy is sometimes right")
+    ax.set_title("A binary verifier only teaches in the band where the policy sometimes fails")
     ax.legend(frameon=False)
     _style(ax)
     fig.tight_layout()

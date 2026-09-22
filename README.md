@@ -20,16 +20,16 @@ Every training method here sees a different partial view of that function. In pr
 | `reward.train_reward_model` | RLHF. A scalar fit to noisy pairwise preferences via Bradley-Terry |
 | `reward.verifier_reward` | RLVR. A deterministic rule checker returning 10 or 0 |
 | `reward.train_decision_head` | RLCD. A probability scored by a bounded proper scoring rule |
-| `optim.grpo_step` | GRPO. Group-relative advantage, k3 KL in the loss |
+| `optim.grpo_step` | GRPO. Group-relative advantage, clipped ratio, k3 KL in the loss |
 | `optim.critic_step` | PPO's learned baseline, for contrast |
 
 One reward arrives per completed order, so this is a contextual bandit. No discounting, no GAE, no bootstrapping. That leaves only the choice of baseline, which is the part worth comparing.
 
 ## What the figures show
 
-`overoptimization.png` plots the learned reward against the hidden truth. The reward model trains only on orders of four items or fewer. In that range more items really is better, so it learns a positive length coefficient of +0.38 and extrapolates past the crowding inflection. True satisfaction rises to +0.83, peaks at 2.4 nats of KL, then collapses to -11.42 while the proxy climbs from +0.10 to +6.74 without interruption.
+`overoptimization.png` plots the learned reward against the hidden truth. The reward model trains only on orders of four items or fewer. In that range more items really is better, so it learns a positive length coefficient of +0.38 and extrapolates past the crowding inflection. True satisfaction rises to +1.27, peaks at 4.3 nats of KL, then collapses to -9.71 while the proxy climbs from +0.11 to +8.13 without interruption.
 
-`zero-advantage.png` shows a binary verifier that cannot teach until the policy is already sometimes right. At the start, every one of the sixteen samples in a group fails, so the rewards are uniformly zero, the advantage is exactly zero, and no gradient exists. Degenerate groups run at 100% early and 0% late while the pass rate climbs from 1.6% to 58.6%. DAPO resamples until group accuracy sits strictly between 0 and 1, which covers this end and the saturated end alike.
+`zero-advantage.png` shows a binary verifier going silent at both ends of training. When all sixteen samples in a group earn the same reward, the advantage is exactly zero and no gradient exists. Degenerate groups run at 100% at the start, where nothing verifies, fall to 0% at step 380 as the pass rate crosses the middle, then climb back to 96% once the policy passes almost everything. The pass rate goes 1.6% to 99.6%. A binary reward only teaches in the band where the policy sometimes fails, which is exactly why DAPO resamples until group accuracy sits strictly between 0 and 1.
 
 `reliability.png` plots stated probability against observed frequency. The decision head emits P(customer accepts) and trains on Brier score, so a stated 0.30 should come true about 30% of the time. It reaches Brier 0.150 and ECE 0.043 across the full 0 to 1 range.
 
@@ -40,7 +40,9 @@ One reward arrives per completed order, so this is a contextual bandit. No disco
 - The menu's tastiness spread is wide, with fillings around +1.95 and cheap extras negative. A narrower spread makes the reward model's length coefficient dominate its item weights, and the policy then lengthens instead of fixing composition, which erases the early gain.
 - `Policy.initial` takes a `stop_bias` and `item_bias` that approximate an SFT checkpoint. Starting from a uniform policy puts the run past the satisfaction peak before training begins.
 - The reward model is linear over a bag-of-items feature vector, too weak to represent the crowding inflection. That weakness is the experiment, not an oversight.
-- GRPO here runs one inner epoch per rollout, so the importance ratio is 1 and clipping never activates. The code computes the term anyway to keep it visible.
+- `grpo_step` reuses each rollout for `inner_epochs=4` updates. That is what makes the importance ratio diverge from 1 and gives clipping and the KL term something to do. At a single epoch the ratio is exactly 1, clipping is a no-op and the KL is multiplied by a coefficient every experiment sets to 0, which is worth checking before trusting any GRPO implementation. `test_clipping_actually_binds_across_inner_epochs` and `test_kl_term_changes_the_update` guard against regressing to that.
+- The experiments run with `kl_coefficient=0`. That follows [Gao et al.](https://arxiv.org/abs/2210.10760), who set it to zero for their main runs after finding the penalty acts like early stopping, and DAPO, which removes it entirely. The KL path is exercised by tests rather than by the headline runs.
+- At the first inner epoch the per-sample gradient coefficient equals DeepSeekMath's published form, $\hat{A} + \beta(\pi_{ref}/\pi_\theta - 1)$, verified in `test_gradient_coefficient_matches_deepseekmath`.
 
 ## Layout
 
