@@ -31,7 +31,7 @@ One reward arrives per completed order, so this is a contextual bandit. No disco
 
 `overoptimization.png` plots the learned reward against the hidden truth. The reward model trains only on orders of four items or fewer. In that range more items really is better, so it learns a positive length coefficient of +0.38 and extrapolates past the crowding inflection. True satisfaction rises to +1.27, peaks at 4.3 nats of KL, then collapses to -9.71 while the proxy climbs from +0.11 to +8.13 without interruption.
 
-`zero-advantage.png` shows a binary verifier going silent at both ends of training. When all sixteen samples in a group earn the same reward, the advantage is exactly zero and no gradient exists. Degenerate groups run at 100% at the start, where nothing verifies, fall to 0% at step 380 as the pass rate crosses the middle, then climb back to 92% once the policy passes almost everything. The pass rate goes 1.6% to 99.6%. A binary reward only teaches in the band where the policy sometimes fails, which is exactly why DAPO resamples until group accuracy sits strictly between 0 and 1.
+`zero-advantage.png` shows a binary verifier going silent at both ends of training. When all sixteen samples in a group earn the same reward, the advantage is exactly zero and no gradient exists. Degenerate groups run at 100% at the start, where nothing verifies, fall to 0% at step 380 as the pass rate crosses the middle, then climb back to 92% once the policy passes almost everything. On seeds 2 to 4 the trough is 2 to 6% rather than 0%, at steps 340 to 480; the U holds on every seed. The pass rate goes 1.6% to 99.6%. A binary reward only teaches in the band where the policy sometimes fails, which is exactly why DAPO resamples until group accuracy sits strictly between 0 and 1.
 
 `reliability.png` plots stated probability against observed frequency. The decision head emits P(customer accepts) and trains on Brier score, so a stated 0.30 should come true about 30% of the time. It reaches Brier 0.150 and ECE 0.043 across the full 0 to 1 range.
 
@@ -67,7 +67,7 @@ rlsub/charts.py   figure rendering
 | Learned critic | 0.0722 | 37.9% | 0.327 |
 | Group mean | 0.0676 | 35.5% | 0.201 |
 
-The group mean cuts variance slightly harder than the critic with no parameters, and tracks the quantity better because the critic is an exponential average chasing a moving policy. The group/critic ratio sits at 0.90 across every training length tested; group/none tightens from 61% to 44% as the policy spreads out. This is a bandit, so the critic has no prefix to condition on and this is as favourable to the group as it gets.
+Those numbers are seed 0, the most favourable of five. Across seeds 0 to 4 the group baseline brings the spread to between 36% and 64% of no baseline and always sits at or just under the critic, 0.94 to 0.99 of it. It tracks the expected reward better in four of five seeds. The fair summary is that a zero-parameter group mean matches a learned critic, not that it beats one. This is a bandit, so the critic has no prefix to condition on and this is as favourable to the group as it gets.
 
 ## Writing to a memory with a reward instead of a likelihood
 
@@ -77,7 +77,7 @@ Items stream past with category tags, a notepad holds three of them, and at the 
 
 | Trained on | Write rate, position 1 to 10 | Writes per episode | Recall |
 |---|---|---|---|
-| Recency | 0.68 rising to 0.98 | 9.0 | 24.0% |
+| Recency | about 0.97 throughout (0.68 rising to 0.98 at seed 0) | 9.0 | 24.0% |
 | Recall | 1.00 falling to 0.03 | 3.1 | 99.6% |
 
 The curves invert. The recall-trained policy writes about three times, once per slot, early, and then defends what it has. Nothing about the architecture changed; only the reward did. `make charts` renders this as `retention.png`.
