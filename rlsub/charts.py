@@ -19,6 +19,12 @@ import numpy as np  # noqa: E402
 
 from .reward import train_reward_model  # noqa: E402
 from .train import run_rlcd, run_rlhf, run_rlvr  # noqa: E402
+from .notepad import (  # noqa: E402
+    recall_reward,
+    recency_reward,
+    train as train_notepad,
+    write_rate_by_position,
+)
 
 OUTPUT = pathlib.Path(__file__).resolve().parent.parent / "charts"
 PROXY_COLOUR = "#c2410c"
@@ -112,11 +118,35 @@ def reliability(rng: np.random.Generator, n_bins: int = 10) -> None:
     plt.close(fig)
 
 
+def retention(rng: np.random.Generator) -> None:
+    curves = {}
+    for name, reward_fn in (("Rewarded for recency", recency_reward),
+                            ("Rewarded for recall", recall_reward)):
+        policy = train_notepad(reward_fn, np.random.default_rng(0))
+        curves[name] = write_rate_by_position(policy, rng)
+
+    fig, ax = plt.subplots(figsize=(7.2, 4.2))
+    positions = np.arange(1, len(next(iter(curves.values()))) + 1)
+    for (name, curve), colour in zip(curves.items(), (PROXY_COLOUR, TRUTH_COLOUR)):
+        ax.plot(positions, curve, "o-", lw=2, ms=5, color=colour, label=name)
+    ax.set_xlabel("Position in the sequence")
+    ax.set_ylabel("Probability of writing to the notepad")
+    ax.set_ylim(0, 1.05)
+    ax.set_xticks(positions)
+    ax.set_title("The reward decides what a fixed-size memory keeps")
+    ax.legend(frameon=False)
+    _style(ax)
+    fig.tight_layout()
+    fig.savefig(OUTPUT / "retention.png", dpi=160)
+    plt.close(fig)
+
+
 def main() -> None:
     OUTPUT.mkdir(exist_ok=True)
     overoptimization(np.random.default_rng(0))
     zero_advantage(np.random.default_rng(1))
     reliability(np.random.default_rng(2))
+    retention(np.random.default_rng(3))
     for path in sorted(OUTPUT.glob("*.png")):
         print(f"wrote {path.relative_to(OUTPUT.parent)}")
 

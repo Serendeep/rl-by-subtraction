@@ -22,6 +22,8 @@ Every training method here sees a different partial view of that function. In pr
 | `reward.train_decision_head` | RLCD. A probability scored by a bounded proper scoring rule |
 | `optim.grpo_step` | GRPO. Group-relative advantage, clipped ratio, k3 KL in the loss |
 | `optim.critic_step` | PPO's learned baseline, for contrast |
+| `baselines.compare` | GRPO's own claim: the critic's only job is variance reduction |
+| `notepad.train` | Speculative. The same optimiser pointed at a fixed-size memory |
 
 One reward arrives per completed order, so this is a contextual bandit. No discounting, no GAE, no bootstrapping. That leaves only the choice of baseline, which is the part worth comparing.
 
@@ -55,6 +57,31 @@ rlsub/train.py    the three runs
 rlsub/charts.py   figure rendering
 ```
 
+## Does dropping the critic cost anything
+
+`python -m rlsub.baselines` estimates the same gradient three ways and reports the spread across the group.
+
+| Baseline | Gradient standard deviation | Relative | Error against the expected reward |
+|---|---|---|---|
+| None | 0.1905 | 100% | |
+| Learned critic | 0.0722 | 37.9% | 0.327 |
+| Group mean | 0.0676 | 35.5% | 0.201 |
+
+The group mean cuts variance slightly harder than the critic with no parameters, and tracks the quantity better because the critic is an exponential average chasing a moving policy. The group/critic ratio sits at 0.90 across every training length tested; group/none tightens from 61% to 44% as the policy spreads out. This is a bandit, so the critic has no prefix to condition on and this is as favourable to the group as it gets.
+
+## Writing to a memory with a reward instead of a likelihood
+
+**Speculative.** No published work trains an SSM's write gate with RL. `rlsub/notepad.py` is a tabular toy with three slots, not evidence about Mamba.
+
+Items stream past with category tags, a notepad holds three of them, and at the end a query asks for the first item in some category. Same GRPO, same group baseline, two different rewards.
+
+| Trained on | Write rate, position 1 to 10 | Writes per episode | Recall |
+|---|---|---|---|
+| Recency | 0.68 rising to 0.98 | 9.0 | 24.0% |
+| Recall | 1.00 falling to 0.03 | 3.1 | 99.6% |
+
+The curves invert. The recall-trained policy writes about three times, once per slot, early, and then defends what it has. Nothing about the architecture changed; only the reward did. `make charts` renders this as `retention.png`.
+
 ## What the policies actually ordered
 
 Brute-forcing every order up to 12 items gives the environment's true optimum, which makes it possible to say exactly how far each method ends up from it.
@@ -79,6 +106,6 @@ Reproduce with `python -m rlsub.best` .
 | Answerable, "is this customer unhappy?" | 100% | 0.006 | 0.054 | 0.95 |
 | Unanswerable, "escalate to tier three?" | 40% | 0.449 | 0.430 | 0.84 |
 
-Sixty of the 120 unanswerable answers came back below 0.1, near-certain. Only 19 sat in the 0.4 to 0.6 band where an honest "I cannot know" belongs. Mean P(escalate) was 0.29 for unhappy customers and 0.05 for pleased ones, so the model answered a question about tone rather than the one asked. A second run at seed 7 gives ECE 0.047 against 0.344.
+Sixty of the 120 unanswerable answers came back below 0.1, near-certain. Only 19 sat in the 0.4 to 0.6 band where an honest "I cannot know" belongs. Mean P(escalate) was 0.287 for unhappy customers and 0.045 for pleased ones, so the model answered a question about tone rather than the one asked. A second run at seed 7 gives ECE 0.047 against 0.344.
 
 The routing policy is arbitrary and uncorrelated with tone, so near-chance accuracy is expected and is not the point. The point is that the probability does not report the guess. Raw responses are in `jev/results.json` so the numbers can be rechecked without re-running the calls.

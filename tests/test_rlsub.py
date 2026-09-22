@@ -192,3 +192,38 @@ def test_the_optimum_does_not_verify():
     assert not ok(best_order)
     assert best_legal[0] < best_score
     assert best_legal[0] > 4.0
+
+
+def test_reward_choice_inverts_the_retention_policy():
+    """Speculative toy: the same optimiser keeps different things per reward."""
+    from rlsub.notepad import (
+        recall_reward,
+        recency_reward,
+        train as train_notepad,
+        write_rate_by_position,
+    )
+
+    rng = np.random.default_rng(3)
+    recency = write_rate_by_position(
+        train_notepad(recency_reward, np.random.default_rng(0), steps=1200), rng, n=400)
+    recall = write_rate_by_position(
+        train_notepad(recall_reward, np.random.default_rng(0), steps=1200), rng, n=400)
+
+    assert recency[-1] > recency[0]   # recency writes more as the tail arrives
+    assert recall[0] > recall[-1]     # recall writes early, then defends
+
+
+def test_group_mean_reduces_variance_like_a_critic():
+    """GRPO's actual claim: any valid baseline does the critic's only job."""
+    from rlsub.baselines import compare
+    from rlsub.reward import train_reward_model
+
+    rng = np.random.default_rng(0)
+    result = compare(rng, train_reward_model(rng, n_pairs=1500, epochs=120), steps=60)
+    spread = result["spread"]
+
+    # group/none tightens with training (61% at 60 steps, 44% by 300), so the
+    # loose bound here is deliberate. group/critic sits at 0.90 throughout and
+    # is the claim worth pinning.
+    assert spread["group"] < spread["none"] * 0.7
+    assert spread["group"] < spread["critic"]
