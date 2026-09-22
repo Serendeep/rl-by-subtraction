@@ -178,3 +178,17 @@ def test_log_score_is_unbounded_where_brier_is_not():
     confident_miss = np.array([0.999]), np.array([0.0])
     assert brier_score(*confident_miss) < 1.0
     assert log_score(*confident_miss) > 6.0
+
+
+def test_the_optimum_does_not_verify():
+    """The best sandwich breaks the rules, so the verifier costs real satisfaction."""
+    from rlsub.best import ranked
+    from rlsub.deli import verifies as ok
+
+    scored = ranked()
+    best_score, best_order = scored[0]
+    best_legal = next(pair for pair in scored if ok(pair[1]))
+
+    assert not ok(best_order)
+    assert best_legal[0] < best_score
+    assert best_legal[0] > 4.0

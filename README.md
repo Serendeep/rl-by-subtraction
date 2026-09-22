@@ -55,6 +55,21 @@ rlsub/train.py    the three runs
 rlsub/charts.py   figure rendering
 ```
 
+## What the policies actually ordered
+
+Brute-forcing every order up to 12 items gives the environment's true optimum, which makes it possible to say exactly how far each method ends up from it.
+
+| | Order | Cost | True satisfaction |
+|---|---|---|---|
+| Best possible | 5 x halloumi | £12.00 | +5.93, but fails the verifier |
+| Best that verifies | sourdough + halloumi + halloumi | £6.00 | +4.95 |
+| What RLHF learned | 12 x halloumi | £28.80 | -4.36 |
+| What RLVR learned | focaccia + turkey | £4.20 | +3.00 |
+
+The reward model scores twelve halloumi at +13.59, the highest value it ever assigns, because every slice adds tastiness and length and it has no term for crowding or budget. RLVR's policy lands on a real sandwich and then stops improving, since a binary reward carries no gradient above the threshold.
+
+Reproduce with `python -m rlsub.best` .
+
 ## The Jev probe
 
 `jev/probe.py` asks a live model two questions about the same support ticket: one answerable from the message, one that depends on a routing policy the model is never shown. It needs `TYPESAFE_API_KEY` in the environment and costs about two tenths of a cent for 120 tickets.
