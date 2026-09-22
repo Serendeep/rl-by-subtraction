@@ -1,0 +1,965 @@
+{
+  "model": "jev-latest",
+  "records": [
+    {
+      "id": "case000",
+      "message": "Ticket 1000 from a customer in the north region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case001",
+      "message": "Ticket 1001 from a customer in the central region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.49
+    },
+    {
+      "id": "case002",
+      "message": "Ticket 1002 from a customer in the central region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.42
+    },
+    {
+      "id": "case003",
+      "message": "Ticket 1003 from a customer in the south region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.13
+    },
+    {
+      "id": "case004",
+      "message": "Ticket 1004 from a customer in the islands region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case005",
+      "message": "Ticket 1005 from a customer in the south region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case006",
+      "message": "Ticket 1006 from a customer in the north region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.8,
+      "p_escalate": 0.23
+    },
+    {
+      "id": "case007",
+      "message": "Ticket 1007 from a customer in the islands region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case008",
+      "message": "Ticket 1008 from a customer in the islands region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.21
+    },
+    {
+      "id": "case009",
+      "message": "Ticket 1009 from a customer in the south region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.5
+    },
+    {
+      "id": "case010",
+      "message": "Ticket 1010 from a customer in the central region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case011",
+      "message": "Ticket 1011 from a customer in the north region. They wrote: 'Works exactly as described, no complaints at all.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case012",
+      "message": "Ticket 1012 from a customer in the north region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case013",
+      "message": "Ticket 1013 from a customer in the north region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.95,
+      "p_escalate": 0.17
+    },
+    {
+      "id": "case014",
+      "message": "Ticket 1014 from a customer in the south region. They wrote: 'Works exactly as described, no complaints at all.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case015",
+      "message": "Ticket 1015 from a customer in the north region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case016",
+      "message": "Ticket 1016 from a customer in the south region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.53
+    },
+    {
+      "id": "case017",
+      "message": "Ticket 1017 from a customer in the central region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.14
+    },
+    {
+      "id": "case018",
+      "message": "Ticket 1018 from a customer in the central region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.41
+    },
+    {
+      "id": "case019",
+      "message": "Ticket 1019 from a customer in the islands region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.49
+    },
+    {
+      "id": "case020",
+      "message": "Ticket 1020 from a customer in the islands region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case021",
+      "message": "Ticket 1021 from a customer in the south region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case022",
+      "message": "Ticket 1022 from a customer in the islands region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case023",
+      "message": "Ticket 1023 from a customer in the central region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.53
+    },
+    {
+      "id": "case024",
+      "message": "Ticket 1024 from a customer in the islands region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.13
+    },
+    {
+      "id": "case025",
+      "message": "Ticket 1025 from a customer in the north region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.14
+    },
+    {
+      "id": "case026",
+      "message": "Ticket 1026 from a customer in the islands region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case027",
+      "message": "Ticket 1027 from a customer in the south region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case028",
+      "message": "Ticket 1028 from a customer in the north region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.08,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case029",
+      "message": "Ticket 1029 from a customer in the central region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case030",
+      "message": "Ticket 1030 from a customer in the islands region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case031",
+      "message": "Ticket 1031 from a customer in the south region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case032",
+      "message": "Ticket 1032 from a customer in the central region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case033",
+      "message": "Ticket 1033 from a customer in the central region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case034",
+      "message": "Ticket 1034 from a customer in the islands region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case035",
+      "message": "Ticket 1035 from a customer in the north region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.5
+    },
+    {
+      "id": "case036",
+      "message": "Ticket 1036 from a customer in the islands region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.75,
+      "p_escalate": 0.23
+    },
+    {
+      "id": "case037",
+      "message": "Ticket 1037 from a customer in the north region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case038",
+      "message": "Ticket 1038 from a customer in the south region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.07,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case039",
+      "message": "Ticket 1039 from a customer in the islands region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.13
+    },
+    {
+      "id": "case040",
+      "message": "Ticket 1040 from a customer in the north region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case041",
+      "message": "Ticket 1041 from a customer in the south region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case042",
+      "message": "Ticket 1042 from a customer in the north region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.95,
+      "p_escalate": 0.55
+    },
+    {
+      "id": "case043",
+      "message": "Ticket 1043 from a customer in the south region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.81,
+      "p_escalate": 0.24
+    },
+    {
+      "id": "case044",
+      "message": "Ticket 1044 from a customer in the north region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case045",
+      "message": "Ticket 1045 from a customer in the north region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.4
+    },
+    {
+      "id": "case046",
+      "message": "Ticket 1046 from a customer in the south region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case047",
+      "message": "Ticket 1047 from a customer in the north region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case048",
+      "message": "Ticket 1048 from a customer in the north region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.79,
+      "p_escalate": 0.24
+    },
+    {
+      "id": "case049",
+      "message": "Ticket 1049 from a customer in the central region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.06,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case050",
+      "message": "Ticket 1050 from a customer in the north region. They wrote: 'Works exactly as described, no complaints at all.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case051",
+      "message": "Ticket 1051 from a customer in the islands region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.75,
+      "p_escalate": 0.23
+    },
+    {
+      "id": "case052",
+      "message": "Ticket 1052 from a customer in the north region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.14
+    },
+    {
+      "id": "case053",
+      "message": "Ticket 1053 from a customer in the north region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.07,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case054",
+      "message": "Ticket 1054 from a customer in the south region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case055",
+      "message": "Ticket 1055 from a customer in the central region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.79,
+      "p_escalate": 0.22
+    },
+    {
+      "id": "case056",
+      "message": "Ticket 1056 from a customer in the south region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case057",
+      "message": "Ticket 1057 from a customer in the north region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case058",
+      "message": "Ticket 1058 from a customer in the south region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case059",
+      "message": "Ticket 1059 from a customer in the north region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.41
+    },
+    {
+      "id": "case060",
+      "message": "Ticket 1060 from a customer in the south region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case061",
+      "message": "Ticket 1061 from a customer in the central region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.8,
+      "p_escalate": 0.24
+    },
+    {
+      "id": "case062",
+      "message": "Ticket 1062 from a customer in the islands region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case063",
+      "message": "Ticket 1063 from a customer in the islands region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case064",
+      "message": "Ticket 1064 from a customer in the north region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.8,
+      "p_escalate": 0.23
+    },
+    {
+      "id": "case065",
+      "message": "Ticket 1065 from a customer in the islands region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case066",
+      "message": "Ticket 1066 from a customer in the islands region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case067",
+      "message": "Ticket 1067 from a customer in the islands region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.93,
+      "p_escalate": 0.17
+    },
+    {
+      "id": "case068",
+      "message": "Ticket 1068 from a customer in the islands region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case069",
+      "message": "Ticket 1069 from a customer in the south region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case070",
+      "message": "Ticket 1070 from a customer in the central region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case071",
+      "message": "Ticket 1071 from a customer in the north region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.07,
+      "p_escalate": 0.06
+    },
+    {
+      "id": "case072",
+      "message": "Ticket 1072 from a customer in the islands region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case073",
+      "message": "Ticket 1073 from a customer in the central region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.15
+    },
+    {
+      "id": "case074",
+      "message": "Ticket 1074 from a customer in the central region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.8,
+      "p_escalate": 0.23
+    },
+    {
+      "id": "case075",
+      "message": "Ticket 1075 from a customer in the central region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.79,
+      "p_escalate": 0.23
+    },
+    {
+      "id": "case076",
+      "message": "Ticket 1076 from a customer in the north region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case077",
+      "message": "Ticket 1077 from a customer in the islands region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case078",
+      "message": "Ticket 1078 from a customer in the central region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case079",
+      "message": "Ticket 1079 from a customer in the north region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case080",
+      "message": "Ticket 1080 from a customer in the islands region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case081",
+      "message": "Ticket 1081 from a customer in the north region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.95,
+      "p_escalate": 0.18
+    },
+    {
+      "id": "case082",
+      "message": "Ticket 1082 from a customer in the south region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case083",
+      "message": "Ticket 1083 from a customer in the north region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case084",
+      "message": "Ticket 1084 from a customer in the north region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case085",
+      "message": "Ticket 1085 from a customer in the central region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.8,
+      "p_escalate": 0.24
+    },
+    {
+      "id": "case086",
+      "message": "Ticket 1086 from a customer in the north region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.14
+    },
+    {
+      "id": "case087",
+      "message": "Ticket 1087 from a customer in the north region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.06,
+      "p_escalate": 0.06
+    },
+    {
+      "id": "case088",
+      "message": "Ticket 1088 from a customer in the south region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.54
+    },
+    {
+      "id": "case089",
+      "message": "Ticket 1089 from a customer in the south region. They wrote: 'Works exactly as described, no complaints at all.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case090",
+      "message": "Ticket 1090 from a customer in the north region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.17
+    },
+    {
+      "id": "case091",
+      "message": "Ticket 1091 from a customer in the north region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.95,
+      "p_escalate": 0.17
+    },
+    {
+      "id": "case092",
+      "message": "Ticket 1092 from a customer in the islands region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case093",
+      "message": "Ticket 1093 from a customer in the islands region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.13
+    },
+    {
+      "id": "case094",
+      "message": "Ticket 1094 from a customer in the north region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.06,
+      "p_escalate": 0.06
+    },
+    {
+      "id": "case095",
+      "message": "Ticket 1095 from a customer in the islands region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.39
+    },
+    {
+      "id": "case096",
+      "message": "Ticket 1096 from a customer in the north region. They wrote: 'Great quality for the price, I am very pleased.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case097",
+      "message": "Ticket 1097 from a customer in the central region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case098",
+      "message": "Ticket 1098 from a customer in the central region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case099",
+      "message": "Ticket 1099 from a customer in the south region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.5
+    },
+    {
+      "id": "case100",
+      "message": "Ticket 1100 from a customer in the islands region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.54
+    },
+    {
+      "id": "case101",
+      "message": "Ticket 1101 from a customer in the islands region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.13
+    },
+    {
+      "id": "case102",
+      "message": "Ticket 1102 from a customer in the north region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.93,
+      "p_escalate": 0.44
+    },
+    {
+      "id": "case103",
+      "message": "Ticket 1103 from a customer in the north region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.95,
+      "p_escalate": 0.53
+    },
+    {
+      "id": "case104",
+      "message": "Ticket 1104 from a customer in the south region. They wrote: 'The item I received is the wrong colour entirely.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.14
+    },
+    {
+      "id": "case105",
+      "message": "Ticket 1105 from a customer in the islands region. They wrote: 'Works exactly as described, no complaints at all.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case106",
+      "message": "Ticket 1106 from a customer in the south region. They wrote: 'Still waiting on a refund from six weeks ago.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.96,
+      "p_escalate": 0.52
+    },
+    {
+      "id": "case107",
+      "message": "Ticket 1107 from a customer in the south region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.95,
+      "p_escalate": 0.18
+    },
+    {
+      "id": "case108",
+      "message": "Ticket 1108 from a customer in the south region. They wrote: 'Works exactly as described, no complaints at all.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.02,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case109",
+      "message": "Ticket 1109 from a customer in the north region. They wrote: 'Setup took two minutes and everything works.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.05
+    },
+    {
+      "id": "case110",
+      "message": "Ticket 1110 from a customer in the islands region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.93,
+      "p_escalate": 0.4
+    },
+    {
+      "id": "case111",
+      "message": "Ticket 1111 from a customer in the central region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case112",
+      "message": "Ticket 1112 from a customer in the north region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.93,
+      "p_escalate": 0.38
+    },
+    {
+      "id": "case113",
+      "message": "Ticket 1113 from a customer in the central region. They wrote: 'The instructions are in a language I cannot read.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.79,
+      "p_escalate": 0.22
+    },
+    {
+      "id": "case114",
+      "message": "Ticket 1114 from a customer in the islands region. They wrote: 'This is the second time the delivery has been missed.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.43
+    },
+    {
+      "id": "case115",
+      "message": "Ticket 1115 from a customer in the south region. They wrote: 'Just wanted to say the support last week was excellent.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case116",
+      "message": "Ticket 1116 from a customer in the north region. They wrote: 'The replacement came through quickly, thank you.'",
+      "unhappy": false,
+      "escalate": true,
+      "p_unhappy": 0.03,
+      "p_escalate": 0.04
+    },
+    {
+      "id": "case117",
+      "message": "Ticket 1117 from a customer in the south region. They wrote: 'My package arrived three days late and the box was crushed.'",
+      "unhappy": true,
+      "escalate": false,
+      "p_unhappy": 0.97,
+      "p_escalate": 0.2
+    },
+    {
+      "id": "case118",
+      "message": "Ticket 1118 from a customer in the central region. They wrote: 'Arrived a day early and the packaging was lovely.'",
+      "unhappy": false,
+      "escalate": false,
+      "p_unhappy": 0.08,
+      "p_escalate": 0.06
+    },
+    {
+      "id": "case119",
+      "message": "Ticket 1119 from a customer in the islands region. They wrote: 'The zip broke the first time I used it.'",
+      "unhappy": true,
+      "escalate": true,
+      "p_unhappy": 0.94,
+      "p_escalate": 0.16
+    }
+  ]
+}

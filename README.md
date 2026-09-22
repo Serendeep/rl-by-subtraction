@@ -29,7 +29,7 @@ One reward arrives per completed order, so this is a contextual bandit. No disco
 
 `overoptimization.png` plots the learned reward against the hidden truth. The reward model trains only on orders of four items or fewer. In that range more items really is better, so it learns a positive length coefficient of +0.38 and extrapolates past the crowding inflection. True satisfaction rises to +1.27, peaks at 4.3 nats of KL, then collapses to -9.71 while the proxy climbs from +0.11 to +8.13 without interruption.
 
-`zero-advantage.png` shows a binary verifier going silent at both ends of training. When all sixteen samples in a group earn the same reward, the advantage is exactly zero and no gradient exists. Degenerate groups run at 100% at the start, where nothing verifies, fall to 0% at step 380 as the pass rate crosses the middle, then climb back to 96% once the policy passes almost everything. The pass rate goes 1.6% to 99.6%. A binary reward only teaches in the band where the policy sometimes fails, which is exactly why DAPO resamples until group accuracy sits strictly between 0 and 1.
+`zero-advantage.png` shows a binary verifier going silent at both ends of training. When all sixteen samples in a group earn the same reward, the advantage is exactly zero and no gradient exists. Degenerate groups run at 100% at the start, where nothing verifies, fall to 0% at step 380 as the pass rate crosses the middle, then climb back to 92% once the policy passes almost everything. The pass rate goes 1.6% to 99.6%. A binary reward only teaches in the band where the policy sometimes fails, which is exactly why DAPO resamples until group accuracy sits strictly between 0 and 1.
 
 `reliability.png` plots stated probability against observed frequency. The decision head emits P(customer accepts) and trains on Brier score, so a stated 0.30 should come true about 30% of the time. It reaches Brier 0.150 and ECE 0.043 across the full 0 to 1 range.
 
@@ -54,3 +54,16 @@ rlsub/optim.py    GRPO, k3 KL, and the critic it replaced
 rlsub/train.py    the three runs
 rlsub/charts.py   figure rendering
 ```
+
+## The Jev probe
+
+`jev/probe.py` asks a live model two questions about the same support ticket: one answerable from the message, one that depends on a routing policy the model is never shown. It needs `TYPESAFE_API_KEY` in the environment and costs about two tenths of a cent for 120 tickets.
+
+| Question | Accuracy | Brier | ECE | Mean confidence |
+|---|---|---|---|---|
+| Answerable, "is this customer unhappy?" | 100% | 0.006 | 0.054 | 0.95 |
+| Unanswerable, "escalate to tier three?" | 40% | 0.449 | 0.430 | 0.84 |
+
+Sixty of the 120 unanswerable answers came back below 0.1, near-certain. Only 19 sat in the 0.4 to 0.6 band where an honest "I cannot know" belongs. Mean P(escalate) was 0.29 for unhappy customers and 0.05 for pleased ones, so the model answered a question about tone rather than the one asked. A second run at seed 7 gives ECE 0.047 against 0.344.
+
+The routing policy is arbitrary and uncorrelated with tone, so near-chance accuracy is expected and is not the point. The point is that the probability does not report the guess. Raw responses are in `jev/results.json` so the numbers can be rechecked without re-running the calls.
