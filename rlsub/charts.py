@@ -1,6 +1,6 @@
 """Renders the three figures into charts/:
 
-    overoptimization.png  learned reward vs true satisfaction, against KL drift
+    overoptimisation.png  learned reward vs true satisfaction, against KL drift
     zero-advantage.png    verifier pass rate vs fraction of all-equal groups
     reliability.png       stated probability vs observed frequency
 
@@ -68,7 +68,7 @@ def overoptimization(rng: np.random.Generator) -> None:
     _style(ax)
     twin.spines[["top"]].set_visible(False)
     fig.tight_layout()
-    fig.savefig(OUTPUT / "overoptimization.png", dpi=160)
+    fig.savefig(OUTPUT / "overoptimisation.png", dpi=160)
     plt.close(fig)
 
 
