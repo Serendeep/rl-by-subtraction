@@ -31,7 +31,9 @@ One reward arrives per completed order, so this is a contextual bandit. No disco
 
 `overoptimisation.png` plots the learned reward against the hidden truth. The reward model trains only on orders of four items or fewer. In that range more items really is better, so it learns a positive length coefficient of +0.38 and extrapolates past the crowding inflection. True satisfaction rises to +1.27, peaks at 4.3 nats of KL, then collapses to -9.71 while the proxy climbs from +0.11 to +8.13 without interruption.
 
-`zero-advantage.png` shows a binary verifier going silent at both ends of training. When all sixteen samples in a group earn the same reward, the advantage is exactly zero and no gradient exists. Degenerate groups run at 100% at the start, where nothing verifies, fall to 0% at step 380 as the pass rate crosses the middle, then climb back to 92% once the policy passes almost everything. On seeds 2 to 4 the trough is 2 to 6% rather than 0%, at steps 340 to 480; the U holds on every seed. The shape is the closed form for independent samples, as [Chen Yang](https://x.com/ChenY7850) pointed out: with group size G and pass rate p, a group is all-equal with probability p^G + (1-p)^G, smallest at p = 0.5. Fed the logged pass rate at G = 16 it tracks the observed curve with a correlation of 0.92; most of the remaining gap is the 50-step averaging window. The pass rate goes 1.6% to 99.6%. A binary reward only teaches in the band where the policy sometimes fails, which is exactly why DAPO resamples until group accuracy sits strictly between 0 and 1.
+`zero-advantage.png` shows how often a binary verifier gives GRPO nothing to learn from. When all sixteen samples in a group earn the same reward, every advantage is zero and the update does nothing. At the start every group is like that, because almost no order passes. The share falls to 0% at step 380, then rises to 92% once the policy passes almost every time. Over the run the pass rate goes from 1.6% to 99.6%. On seeds 2 to 4 the lowest point is between 2% and 6%, reached between steps 340 and 480.
+
+The U follows from probability, as [Chen Yang](https://x.com/ChenY7850) pointed out. If each of G samples passes independently with probability p, all G rewards match with probability p^G + (1-p)^G, which is lowest at p = 0.5. Using this run's pass rates with G = 16, the formula matches the observed curve with a correlation of 0.92. Most of the difference comes from the 50-step averaging window in the chart. DAPO avoids the problem by resampling until each group contains at least one pass and at least one failure.
 
 `reliability.png` plots stated probability against observed frequency. The decision head emits P(customer accepts) and trains on Brier score, so a stated 0.30 should come true about 30% of the time. It reaches Brier 0.150 and ECE 0.043 across the full 0 to 1 range.
 
@@ -67,7 +69,7 @@ rlsub/charts.py   figure rendering
 | Learned critic | 0.0722 | 37.9% | 0.327 |
 | Group mean | 0.0676 | 35.5% | 0.201 |
 
-Those numbers are seed 0, the most favourable of five. Across seeds 0 to 4 the group baseline brings the spread to between 36% and 64% of no baseline and always sits at or just under the critic, 0.94 to 0.99 of it. It tracks the expected reward better in four of five seeds. The fair summary is that a zero-parameter group mean matches a learned critic, not that it beats one. This is a bandit, so the critic has no prefix to condition on and this is as favourable to the group as it gets.
+These numbers come from seed 0, the most favourable of the five seeds I ran. Across seeds 0 to 4, the group baseline brings the spread down to between 36% and 64% of the no-baseline value. It is always equal to or slightly below the critic, at 0.94 to 0.99 of its value, and it tracks the expected reward more closely in four of the five seeds. So a zero-parameter group mean matches a learned critic here. It does not beat it. This toy is also a bandit, so the critic has no prefix to condition on, which is the best case for the group mean.
 
 ## Writing to a memory with a reward instead of a likelihood
 
@@ -77,7 +79,7 @@ Items stream past with category tags, a notepad holds three of them, and at the 
 
 | Trained on | Write rate, position 1 to 10 | Writes per episode | Recall |
 |---|---|---|---|
-| Recency | about 0.97 throughout (0.68 rising to 0.98 at seed 0) | 9.0 | 24.0% |
+| Recency | near 0.97 from the first step, or 0.68 rising to 0.98 on seed 0 | 9.0 | 24.0% |
 | Recall | 1.00 falling to 0.03 | 3.1 | 99.6% |
 
 The curves invert. The recall-trained policy writes about three times, once per slot, early, and then defends what it has. Nothing about the architecture changed; only the reward did. `make charts` renders this as `retention.png`.
